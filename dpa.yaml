@@ -1,0 +1,36 @@
+apiVersion: oadp.openshift.io/v1alpha1
+kind: DataProtectionApplication
+metadata:
+  name: dpa
+  namespace: openshift-adp
+spec:
+  configuration:
+    velero:
+      defaultPlugins:
+        - openshift
+        - aws
+      resourceTimeout: 10m
+    nodeAgent:
+      enable: true
+      uploaderType: kopia
+  backupLocations:
+    - name: default
+      velero:
+        provider: aws
+        default: true
+        objectStorage:
+          bucket: jkeam-oadp-demo
+          prefix: "backup-20240624"
+        config:
+          region: us-east-2
+          profile: "default"
+        credential:
+          key: cloud
+          name: cloud-credentials
+  snapshotLocations:
+    - name: default
+      velero:
+        provider: aws
+        config:
+          region: us-east-2
+          profile: "default"
