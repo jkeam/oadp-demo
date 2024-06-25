@@ -2,3 +2,5 @@
 .env
 .venv
 venv
+credentials-velero
+.DS_Store

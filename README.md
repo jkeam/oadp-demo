@@ -5,6 +5,7 @@
 2. Logged in as cluster-admin
 3. OADP Operator installed into openshift-adp
 4. Something running in the `jon` namespace that we can backup
+5. AWS CLI installed and logged in using `velero` profile
 
 ## Setup
 
@@ -14,32 +15,34 @@
   aws s3api create-bucket \
     --bucket jkeam-oadp-demo \
     --region us-east-2 \
-    --create-bucket-configuration LocationConstraint=us-east-2
+    --create-bucket-configuration LocationConstraint=us-east-2 \
+    --profile velero
   ```
 
 2. Create User
 
   ```shell
   # create user
-  aws iam create-user --user-name velero
+  aws iam create-user --user-name velero --profile velero
 
   # attach policy
   aws iam put-user-policy \
   --user-name velero \
   --policy-name velero \
-  --policy-document file://velero-policy.json
+  --policy-document file://velero-policy.json \
+  --profile velero
 
-  # create access key
-  aws iam create-access-key --user-name velero
+  # create access key and put into file named credentials-velero
+  aws iam create-access-key --user-name velero --profile velero
   ```
 
-3. Create secret
+3. Create secret from `credentials-velero` file above
 
   ```shell
   oc create secret generic cloud-credentials -n openshift-adp --from-file cloud=credentials-velero
 
   # check
-  # oc get secrets/cloud-credentials
+  # oc get secrets/cloud-credentials -n openshift-adp
   ```
 
 2. Create DataProtectionApplication
@@ -54,7 +57,7 @@
   oc get backupStorageLocations -n openshift-adp
   ```
 
-3. Set CSI Snapshot
+3. Configure VolumeSnapshotClass for use with Velero
 
   ```yaml
   deletionPolicy: Retain
@@ -83,8 +86,6 @@
 2. Destroying
 
   ```shell
-  oc delete -f ./app/db.yaml
-  oc delete all -l app=djangotodos
   oc delete namespace jon
   ```
 

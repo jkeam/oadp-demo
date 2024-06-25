@@ -20,7 +20,7 @@ spec:
         default: true
         objectStorage:
           bucket: jkeam-oadp-demo
-          prefix: "backup-20240624"
+          prefix: "backup-20240625"
         config:
           region: us-east-2
           profile: "default"
