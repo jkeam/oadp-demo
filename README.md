@@ -1,6 +1,9 @@
-# OADP README
+# OADP
+
+This is a demo of the OADP functionality.
 
 ## Prerequisite
+
 1. OCP 4.15+
 2. Logged in as cluster-admin
 3. OADP Operator installed into openshift-adp
@@ -34,6 +37,10 @@
 
   # create access key and put into file named credentials-velero
   aws iam create-access-key --user-name velero --profile velero
+  # example credentials-velero file:
+  # [default]
+  # aws_access_key_id=ASIAIOSFODNN7EXAMPLE
+  # aws_secret_access_key=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
   ```
 
 3. Create secret from `credentials-velero` file above
