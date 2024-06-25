@@ -48,7 +48,7 @@
 2. Create DataProtectionApplication
 
   ```shell
-  oc create -f ./dpa.yaml
+  oc create -f ./setup/dpa.yaml
 
   # check on status
   oc get dpa dpa -n openshift-adp -o jsonpath='{.status}'
@@ -97,3 +97,9 @@
   # get status
   oc get restore restore1 -n openshift-adp -o jsonpath='{.status.phase}'
   ```
+
+## Cleanup
+
+```shell
+./setup/cleanup.sh
+```
