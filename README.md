@@ -81,7 +81,7 @@ This is a demo of the OADP functionality.
 
 ## Running
 
-1. Create Backup
+1. Create Backup (assuming app is running)
 
   ```shell
   oc apply -f ./backup.yaml

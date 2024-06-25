@@ -1,10 +1,10 @@
-## OpenShift
+## Demo Script
 
 ## Setup
 
 ```shell
+# deploy everything
 oc new-project jon
-
 oc apply -f ./db.yaml
 oc apply -f ./app.yaml
 
@@ -23,35 +23,39 @@ echo "https://$(oc get routes/djangotodos -o jsonpath='{.spec.host}')"
 
 ## Backup
 
-```shell
-oc apply -f ./backup.yaml
-```
+1. Request Backup
 
-Then see the resources in AWS S3 bucket
+  ```shell
+  oc apply -f ./backup.yaml
+  ```
 
+2. See the resources in AWS S3 bucket
 
 ## Destroy
-oc delete project jon
 
-Reload URL and see app is dead.
+1. Destroy the app
 
+  ```shell
+  oc delete project jon
+  ```
+
+2. Reload URL and see app is dead
 
 ## Restore
-oc apply -f ./restore.yaml
 
-Watch resources in operator, wait for restore to finish.
+1. Request restore
+  ```shell
+  oc apply -f ./restore.yaml
+  ```
 
-Then look at pods in `jon` namespace.
+2. Watch resources in operator, wait for restore to finish
 
-Then reload the app and see the data is back.
+3. Then look at pods in `jon` namespace
 
-
+4. Then reload the app and see the data is back
 
 ## Cleanup
 
 ```shell
-oc delete backups/backup1 -n openshift-adp
-oc delete $(oc get backuprepository -n openshift-adp -o name) -n openshift-adp
-oc delete restores/restore1 -n openshift-adp
-# delete objects from s3
+./setup/cleanup.sh
 ```
