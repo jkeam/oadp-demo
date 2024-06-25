@@ -4,10 +4,10 @@ This is a demo of the OADP functionality.
 
 ## Prerequisite
 
-1. OCP 4.15+
+1. OCP v4.15+ with ODF v4.14+
 2. Logged in as cluster-admin
-3. OADP Operator installed into openshift-adp
-4. Something running in the `jon` namespace that we can backup
+3. OADP Operator v1.3.2 installed into `openshift-adp` project
+4. App running in the `jon` namespace that we can backup, preferably using storage
 5. AWS CLI installed and logged in using `velero` profile
 
 ## Setup
