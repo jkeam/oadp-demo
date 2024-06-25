@@ -16,32 +16,54 @@ spec:
         app: djangotodos
     spec:
       containers:
-        - image: quay.io/jkeam/djangotodos@sha256:0dee964f6cd79ab7081de46599363f25f0e5940bcf1794fc1c9a1d35d4576a02
-          name: djangotodos
-          env:
-          - name: PYTHONDONTWRITEBYTECODE
-            value: "1"
-          - name: DEBUG
-            value: "True"
-          - name: SECRET_KEY
-            value: "django-insecure-#zd522dfd9)ce1j4*-lj%t@r$syze#@+$(9j89td=@+t8d)!k+"
-          - name: DB_NAME
-            value: "todos"
-          - name: DB_USER
-            value: "postgres"
-          - name: DB_PASSWORD
-            value: "adminpassword"
-          - name: DB_HOST
-            value: "db"
-          - name: DB_PORT
-            value: "5432"
-          - name: ALLOWED_HOSTS
-            value: "*"
-          ports:
-          - containerPort: 8000
-            name: theport
-          command: ["/bin/sh"]
-          args: ["-c", "python ./manage.py migrate && python ./manage.py runserver 0.0.0.0:8000"]
+      - name: djangotodos
+        image: quay.io/jkeam/djangotodos@sha256:74f70f1561c18abaec86a18b627905e0cd7189a6bfdb68347bf92a45bf7a3327
+        env:
+        - name: PYTHONDONTWRITEBYTECODE
+          value: "1"
+        - name: DEBUG
+          value: "True"
+        - name: SECRET_KEY
+          value: "django-insecure-#zd522dfd9)ce1j4*-lj%t@r$syze#@+$(9j89td=@+t8d)!k+"
+        - name: DB_NAME
+          value: "todos"
+        - name: DB_USER
+          value: "postgres"
+        - name: DB_PASSWORD
+          value: "adminpassword"
+        - name: DB_HOST
+          value: "db"
+        - name: DB_PORT
+          value: "5432"
+        - name: ALLOWED_HOSTS
+          value: "*"
+        - name: CSRF_TRUSTED_ORIGINS
+          value: "*"
+        ports:
+        - containerPort: 8000
+          name: theport
+        command: ["/bin/sh"]
+        args: ["-c", "python ./manage.py runserver 0.0.0.0:8000"]
+        startupProbe:
+          httpGet:
+            path: /healthz
+            port: 8000
+            httpHeaders:
+            - name: Accept
+              value: application/json
+          initialDelaySeconds: 3
+          periodSeconds: 3
+          failureThreshold: 10
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8000
+            httpHeaders:
+            - name: Accept
+              value: application/json
+          initialDelaySeconds: 3
+          periodSeconds: 3
+          failureThreshold: 10
       restartPolicy: Always
 
 ---
