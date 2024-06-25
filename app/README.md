@@ -33,8 +33,19 @@ Then see the resources in AWS S3 bucket
 ## Destroy
 oc delete project jon
 
+Reload URL and see app is dead.
+
+
 ## Restore
 oc apply -f ./restore.yaml
+
+Watch resources in operator, wait for restore to finish.
+
+Then look at pods in `jon` namespace.
+
+Then reload the app and see the data is back.
+
+
 
 ## Cleanup
 

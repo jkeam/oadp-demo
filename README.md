@@ -66,7 +66,6 @@
   ```
 
   ```shell
-  oc edit VolumeSnapshotClass ocs-external-storagecluster-cephfsplugin-snapclass
   oc edit VolumeSnapshotClass ocs-external-storagecluster-rbdplugin-snapclass
   ```
 
