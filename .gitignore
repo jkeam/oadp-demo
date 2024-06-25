@@ -4,3 +4,4 @@
 venv
 credentials-velero
 .DS_Store
+secrets/
